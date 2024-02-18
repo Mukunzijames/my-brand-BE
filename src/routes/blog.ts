@@ -1,12 +1,16 @@
-import { Router } from "express";
+import Router from "express";
 
-import {createPost,getAllPost,getPost,updatePost} from "../controllers/blog"
+import {createPost,getAllPost,getPost,updatePost,deletePost} from "../controllers/blog"
 
 
 
 const route = Router()
-route.post('/blog',createPost)
-route.get('/blog/:id',getPost)
+// console.log('get')
+route.post('/blogs',createPost)
+route.get('/blogs/:id',getPost)
+route.get('/blogs',getAllPost)
+route.patch('/blogs/:id',updatePost)
+route.delete('/blogs/:id',deletePost)
 
 
 export default route

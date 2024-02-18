@@ -12,12 +12,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updatePost = exports.getPost = exports.getAllPost = exports.createPost = void 0;
+exports.deletePost = exports.updatePost = exports.getPost = exports.getAllPost = exports.createPost = void 0;
 const blog_1 = __importDefault(require("../models/blog"));
-const { default: mongoose } = require("mongoose");
 //Create post
 const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        //   if (!req.file) {
+        //     return res.status(400).json({ error: 'No file provided' });
+        // }
+        // const result = await (cloudinary as any ).uploader.upload(req.file.path);
         const post = yield blog_1.default.create({
             title: req.body.title,
             desc: req.body.desc,
@@ -61,34 +64,30 @@ const updatePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.updatePost = updatePost;
 //delete post
-// const deletePost=async(req:Request,res:Response)=>{
-//     try {
-//         const post = await Post.findById(req.params.id);
-//         if (post.username === req.body.username) {
-//           try {
-//             await post.delete();
-//             res.status(200).json("Post has been deleted...");
-//           } catch (err) {
-//             res.status(500).json(err);
-//           }
-//         } else {
-//           res.status(401).json("You can delete only your post");
-//         }
-//       } catch (err) {
-//         res.status(500).json(err);
-//       }  
-// }
+const deletePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const post = yield blog_1.default.findById(req.params.id);
+        try {
+            if (post) {
+                yield post.deleteOne();
+            }
+            res.status(200).json("Post has been deleted...");
+        }
+        catch (err) {
+            res.status(500).json(err);
+        }
+    }
+    catch (err) {
+        res.status(500).json(err);
+    }
+});
+exports.deletePost = deletePost;
 //const get all posts
 const getAllPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const username = req.query.user;
     try {
         let posts;
-        if (username) {
-            posts = yield blog_1.default.find({ username });
-        }
-        else {
-            posts = yield blog_1.default.find().populate('comments');
-        }
+        posts = yield blog_1.default.find();
         res.status(200).json(posts);
     }
     catch (err) {

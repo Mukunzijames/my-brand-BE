@@ -1,6 +1,12 @@
 import mongoose from "mongoose";
+ export interface  Ipost{
+  title:string,
+  desc:string,
+  image:string
+}
 
-const PostSchema=new mongoose.Schema({
+
+const PostSchema=new mongoose.Schema<Ipost>({
   title:{
     type:String,
     required:true,
@@ -17,5 +23,5 @@ const PostSchema=new mongoose.Schema({
 },
 {timestamps:true}
 );
-export default    mongoose.model('Post',PostSchema)
+export default    mongoose.model<Ipost>('Post',PostSchema)
  
