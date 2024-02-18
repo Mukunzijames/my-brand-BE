@@ -2,7 +2,6 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import route from './routes/blog';
-
 dotenv.config();
 
 const app = express();
