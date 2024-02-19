@@ -1,17 +1,16 @@
-import Router from "express";
+import { Router } from "express"
 
-import {createPost,getAllPost,getPost,updatePost,deletePost} from "../controllers/blog"
+import { createPost, getAllPost, getPost, updatePost, deletePost, Likes ,unLikes} from "../controllers/blog"
+import upload from "../helper/multer"
+
+const blogRouter = Router()
+blogRouter.post('/', upload.single('image'),createPost)
+blogRouter.get('/:id', getPost)
+blogRouter.get('/', getAllPost)
+blogRouter.patch('/:id', updatePost)
+blogRouter.delete('/:id', deletePost)
+blogRouter.post("/:id/likes",Likes)
+blogRouter.post("/:id",unLikes)
 
 
-
-const route = Router()
-// console.log('get')
-route.post('/blogs',createPost)
-route.get('/blogs/:id',getPost)
-route.get('/blogs',getAllPost)
-route.patch('/blogs/:id',updatePost)
-route.delete('/blogs/:id',deletePost)
-
-
-export default route
-
+export default blogRouter

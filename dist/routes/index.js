@@ -4,8 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const blog_1 = __importDefault(require("../models/blog"));
+const blog_1 = __importDefault(require("./blog"));
+const message_1 = __importDefault(require("./message"));
+const comment_1 = __importDefault(require("./comment"));
 const route = (0, express_1.Router)();
 route.use("/blogs", blog_1.default);
-// console.log('get')
+route.use("/messages", message_1.default);
+route.use("/blogs", comment_1.default);
 exports.default = route;

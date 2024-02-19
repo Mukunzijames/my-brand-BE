@@ -1,16 +1,17 @@
-import dotenv from "dotenv";
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
-const config = {
-    development:{
-        mongoUrl: process.env.MONGODB_URL,
-        port: process.env.PORT
-    },
-    production:{
-        mongoUrl: process.env.MONGODB_URL,
-        port: process.env.PORT
-    }
+const mongoUrl: string = process.env.MONGODB_URL!;
+
+const connectToDatabase = async (): Promise<void> => {
+  try {
+    await mongoose.connect(mongoUrl);
+    console.log(`MongoDB connected`);
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
+  }
 };
 
-// export default config;
+export default connectToDatabase;

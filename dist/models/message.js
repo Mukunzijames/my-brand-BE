@@ -13,13 +13,9 @@ const messageSchema = new mongoose_1.default.Schema({
     email: {
         type: String,
     },
-    subject: {
-        type: String,
-        required: false
-    },
     message: {
         type: String,
         required: false
     }
 }, { timestamps: true });
-exports.default = mongoose_1.default.model('Post', messageSchema);
+exports.default = mongoose_1.default.model('Message', messageSchema);

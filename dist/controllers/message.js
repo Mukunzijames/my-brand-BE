@@ -14,19 +14,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteMessage = exports.updateMessage = exports.getMessage = exports.getMessages = exports.createMessage = void 0;
 const message_1 = __importDefault(require("../models/message"));
+const email_1 = require("../helper/email");
 const createMessage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const Message = yield message_1.default.create({
-            name: req.body.name,
-            email: req.body.email,
-            subject: req.body.email,
-            message: req.body.message
+        const { name, email, message } = req.body;
+        const messages = yield message_1.default.create({
+            name,
+            email,
+            message
         });
-        // await mailer(req.body.email, req.body.message);
-        res.status(201).json(Message);
+        yield (0, email_1.mailer)(email, message);
+        return res.status(201).json({
+            message: "Email sent successfully"
+        });
     }
     catch (error) {
-        res.status(400).send();
+        console.log(error);
+        res.status(500).json(error);
     }
 });
 exports.createMessage = createMessage;
@@ -42,26 +46,26 @@ const getMessages = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 exports.getMessages = getMessages;
 const getMessage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const Message = yield message_1.default.findById(req.params.id);
-        if (message_1.default) {
-            res.status(200).json(Message);
+        const message = yield message_1.default.findById(req.params.id);
+        if (message) {
+            res.status(200).json(message);
         }
         else {
             res.status(404).json('Message does not exist');
         }
     }
     catch (error) {
-        res.status(404).json('Message does not exist');
+        res.status(500).json(error);
     }
 });
 exports.getMessage = getMessage;
 const updateMessage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const Message = yield message_1.default.findByIdAndUpdate(req.params.id, {
+        const message = yield message_1.default.findByIdAndUpdate(req.params.id, {
             $set: req.body
         }, { new: true });
-        if (message_1.default) {
-            res.status(201).json(Message);
+        if (message) {
+            res.status(201).json(message_1.default);
         }
         else {
             res.status(404).json('Data was not updated');

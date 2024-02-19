@@ -4,23 +4,26 @@ import cloudinary from "../helper/cloudinary";
 import Post, { Ipost } from "../models/blog"
 
 //Create post
-const createPost=async(req:Request,res:Response)=>{
+const createPost = async(req:Request,res:Response)=>{
   try{
-  //   if (!req.file) {
-  //     return res.status(400).json({ error: 'No file provided' });
-  // }
-
-  // const result = await (cloudinary as any ).uploader.upload(req.file.path);
-
-        const post=await Post.create({
-          title:req.body.title,
-          desc:req.body.desc,
-          image:req.body.image
-        });
-        res.status(201).json(post)
+    const { title, desc } = req.body;
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file provided'});
+    }
+    const existingPost = await Post.findOne({ title });
+    if (existingPost) {
+      return res.status(400).json({ error: 'Title already exists' });
+    }
+    const result = await cloudinary.uploader.upload(req.file.path);
+    const post = await Post.create({
+      title,
+      desc,
+      image: result.secure_url
+    });
+    return res.status(201).json(post)
     }
     catch(e){
-        res.status(500).json(e)
+      return res.status(500).json()
     }
 }
 //get post
@@ -76,5 +79,38 @@ const getAllPost=async(req:Request,res:Response)=>{
       res.status(500).json(err);
     }
 }
+const Likes=async(req:Request,res:Response)=>{
+  try {
+    const postId = req.params.id;
+    const post = await Post.findById(postId);
 
-export  {createPost,getAllPost,getPost,updatePost,deletePost}
+    if (!post) {
+        return res.status(404).json({ message: "No blog post with the given ID found" });
+    }
+
+    await Post.updateOne({ _id: post._id }, { $inc: { like: 1 } });
+
+    res.status(200).json({ message: 'Post liked successfully' });
+} catch (error) {
+    res.status(500).json({ error: (error as Error).message });
+}
+}
+const unLikes=async(req:Request,res:Response)=>{
+  try {
+    const postId = req.params.id;
+
+    const post = await Post.findOne({ _id: postId });
+
+    if (!post) {
+        return res.status(404).json({ message: "No blog post with the given ID found" });
+    }
+
+    await Post.updateOne({ _id: post._id }, { $inc: { like: -1 } });
+
+    res.status(200).json({ message: 'Post unliked successfully' });
+} catch (error) {
+    res.status(500).json({ error: (error as Error).message });
+}
+}
+
+export  {createPost,getAllPost,getPost,updatePost,deletePost,Likes,unLikes}

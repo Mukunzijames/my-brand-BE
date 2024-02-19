@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const message_1 = require("../controllers/message");
-const route = (0, express_1.Router)();
-route.post("/messages", message_1.createMessage);
-route.get("/messages", message_1.getMessages);
-route.get("/messages", message_1.getMessage);
-route.patch("/messages", message_1.updateMessage);
-route.delete("/messages", message_1.deleteMessage);
-exports.default = route;
+const messageRouter = (0, express_1.Router)();
+messageRouter.post("/", message_1.createMessage);
+messageRouter.get("/", message_1.getMessages);
+messageRouter.get("/:id", message_1.getMessage);
+messageRouter.patch("/:id", message_1.updateMessage);
+messageRouter.delete("/:id", message_1.deleteMessage);
+exports.default = messageRouter;

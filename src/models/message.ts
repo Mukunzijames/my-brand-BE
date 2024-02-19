@@ -16,10 +16,6 @@ const messageSchema=new mongoose.Schema<Imessage>({
     email:{
      type:String,
     },
-    subject:{
-      type:String,
-      required:false
-    },
     message: {
         type:String,
         required:false
@@ -28,4 +24,4 @@ const messageSchema=new mongoose.Schema<Imessage>({
   },
   {timestamps:true}
   );
-  export default    mongoose.model<Imessage>('Post',messageSchema)
+  export default    mongoose.model<Imessage>('Message',messageSchema)

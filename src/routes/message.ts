@@ -2,12 +2,12 @@ import { Router } from "express";
 
 import { createMessage, getMessages, getMessage, deleteMessage, updateMessage} from "../controllers/message";
 
-const route = Router();
+const messageRouter = Router();
 
-route.post("/messages", createMessage)
-route.get("/messages", getMessages)
-route.get("/messages",getMessage)
-route.patch("/messages",updateMessage)
-route.delete("/messages",deleteMessage)
+messageRouter.post("/", createMessage)
+messageRouter.get("/", getMessages)
+messageRouter.get("/:id",getMessage)
+messageRouter.patch("/:id",updateMessage)
+messageRouter.delete("/:id",deleteMessage)
 
-export default route;
+export default messageRouter;
