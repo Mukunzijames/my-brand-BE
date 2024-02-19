@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import { createMessage, getMessages, getMessage, deleteMessage, updateMessage} from "../controllers/message";
+import { messageValidate } from "../middleware/message";
 
 const messageRouter = Router();
 

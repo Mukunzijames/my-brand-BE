@@ -2,7 +2,14 @@ import joi, { string } from "joi"
 import {Ipost} from "../models/blog"
 import{ Imessage } from "../models/message"
 import { Comment } from "../models/comment"
+import {Types} from 'mongoose'
 
+interface comment {
+    name:string,
+    email:string,
+    commentSent:string,
+    blog:Types.ObjectId
+}
 // export const validateLoginData = (login:{email:string, password:string})=> {
 
 //     const loginSchema = joi.object ({
@@ -28,19 +35,19 @@ export const enterBlogData = (blogs: Ipost)=>{
 export const sendMessage =(message:Imessage)=>{
 
 const messageSchema =joi.object ({
-    name:joi.string().min(8).max(32).required,
+    name:joi.string().min(4).max(32).required,
     email:joi.string().email().required,
-    subject:joi.string().min(8).max(32).required,
+    // subject:joi.string().min(4).max(32).required,
     message:joi.string().min(8).max(32).required
 
 })
 return messageSchema.validate(message)
 }
 
-// export const sendComment =(Comment:comment)=>{
-// const commentSchema =joi.object ({
-//     name:joi.string().min(8).max(32).required,
-//     email:joi.string().email().required
-// })
-// return commentSchema.validate(comment)
-// }
+export const sendComment =(Comment:comment)=>{
+const commentSchema =joi.object ({
+    name:joi.string().min(4).max(32).required,
+    email:joi.string().email().required
+})
+return commentSchema.validate(Comment)
+}
