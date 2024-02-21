@@ -20,6 +20,7 @@ const PostSchema=new mongoose.Schema<Ipost>({
   image:{
     type:String,
     required:false
+    
   },
   like:{
     type:Number,

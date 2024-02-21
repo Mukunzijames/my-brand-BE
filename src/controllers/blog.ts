@@ -2,11 +2,16 @@ import { Request ,Response } from "express";
 import cloudinary from "../helper/cloudinary";
 
 import Post, { Ipost } from "../models/blog"
+import {postSchema } from "../utils/validation"
 
 //Create post
 const createPost = async(req:Request,res:Response)=>{
   try{
-    const { title, desc } = req.body;
+    const { error, value } = postSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.message });
+    }
+    const { title, desc } = value;
     if (!req.file) {
       return res.status(400).json({ error: 'No file provided'});
     }

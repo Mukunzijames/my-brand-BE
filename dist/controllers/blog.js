@@ -15,10 +15,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.unLikes = exports.Likes = exports.deletePost = exports.updatePost = exports.getPost = exports.getAllPost = exports.createPost = void 0;
 const cloudinary_1 = __importDefault(require("../helper/cloudinary"));
 const blog_1 = __importDefault(require("../models/blog"));
+const validation_1 = require("../utils/validation");
 //Create post
 const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { title, desc } = req.body;
+        const { error, value } = validation_1.postSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json({ error: error.message });
+        }
+        const { title, desc } = value;
         if (!req.file) {
             return res.status(400).json({ error: 'No file provided' });
         }
