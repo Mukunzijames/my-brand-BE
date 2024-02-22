@@ -1,0 +1,235 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Create CRUD API",
+      "version": "1.0.0",
+      "description": "API to create a blog"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:5000",
+        "description": "development server"
+      },
+      {
+        "url": "http://localhost:5000",
+        "description": "production server"
+      }
+    ],
+    "paths": {
+      "/api/blogs": {
+        "post": {
+          "tags": ["blogs"],
+          "summary": "Create a blog",
+          "requestBody": {
+            "content": {
+              "multipart/form-data": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "desc": {
+                      "type": "string"
+                    },
+                    "image": {
+                      "type": "string",
+                      "format": "binary",
+                      "description": "the image of the blog"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string"
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {}
+                      }
+                    }
+                  },
+                  "example": {
+                    "status": "success",
+                    "data": []
+                  }
+                }
+              }
+            }
+          }
+        },
+        "get": {
+          "tags": ["blogs"],
+          "summary": "List all blogs",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string"
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {}
+                      }
+                    }
+                  },
+                  "example": {
+                    "status": "success",
+                    "data": []
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/blogs/{id}": {
+        "get": {
+          "tags": ["blogs"],
+          "description": "Get blog by id",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "id of the blog",
+              "schema": {
+                "type": "string",
+                "example": "63caaf3527b29e1d399896da"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string"
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {}
+                      }
+                    }
+                  },
+                  "example": {
+                    "status": "success",
+                    "data": []
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "tags": ["blogs"],
+          "description": "Delete the blogs by id",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "id of the blogs",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string"
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {}
+                      }
+                    }
+                  },
+                  "example": {
+                    "status": "success",
+                    "data": []
+                  }
+                }
+              }
+            }
+          }
+        },
+            "patch": {
+                "tags": ["blogs"],
+                "description": "Update a blog",
+                
+                "parameters": [{
+                    "name": "id",
+                    "in": "path",
+                    "description": "id of the post",
+                    "type": "string"
+                }],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "image": {
+                                        "type": "file",
+                                        "description": "the image of the blog"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "type": "object",
+                                "example": {
+                                    "status": "success",
+                                    "data": []
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        
+        }
+        
+        
+      }
+    }
+    
+    
+  
