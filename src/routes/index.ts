@@ -10,6 +10,6 @@ const route = Router()
 
 route.use("/blogs",blogRouter)
 route.use("/messages",messageRouter)
-route.use("/",router)
+route.use("/users",router)
 route.use("/blogs",PostRouter)
 export default route

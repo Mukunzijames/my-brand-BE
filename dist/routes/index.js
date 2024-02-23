@@ -11,6 +11,6 @@ const user_1 = __importDefault(require("./user"));
 const route = (0, express_1.Router)();
 route.use("/blogs", blog_1.default);
 route.use("/messages", message_1.default);
-route.use("/", user_1.default);
+route.use("/users", user_1.default);
 route.use("/blogs", comment_1.default);
 exports.default = route;
