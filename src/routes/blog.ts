@@ -1,6 +1,8 @@
 import { Router } from "express"
 import { createPost, getAllPost, getPost, updatePost, deletePost, Likes ,unLikes} from "../controllers/blog"
 import upload from "../helper/multer"
+import passport from '../helper/passport'
+
 
 const blogRouter = Router()
 blogRouter.post('/', upload.single('image'),createPost)

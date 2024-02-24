@@ -84,6 +84,8 @@ const getAllPost=async(req:Request,res:Response)=>{
       res.status(500).json(err);
     }
 }
+
+
 const Likes=async(req:Request,res:Response)=>{
   try {
     const postId = req.params.id;
