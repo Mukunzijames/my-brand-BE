@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import { commentShow,commentPost } from "../controllers/comment";
+import { isAuthenticated } from "../middleware/authorization";
 
 
 const PostRouter = Router()

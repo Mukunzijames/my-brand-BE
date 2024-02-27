@@ -2,10 +2,15 @@ import { Request, Response } from 'express';
 
 import Message from '../models/message';
 import { mailer } from '../helper/email';
+import { messageSchema } from '../utils/validation';
 
 const createMessage = async (req: Request, res: Response) => {
     try {
-        const { name, email , message} = req.body;
+        const { error, value } = messageSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ error: error.message });
+    }
+        const { name, email , message} = value;
         const messages = await Message.create({
             name,
             email,

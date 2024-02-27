@@ -15,9 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteMessage = exports.updateMessage = exports.getMessage = exports.getMessages = exports.createMessage = void 0;
 const message_1 = __importDefault(require("../models/message"));
 const email_1 = require("../helper/email");
+const validation_1 = require("../utils/validation");
 const createMessage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { name, email, message } = req.body;
+        const { error, value } = validation_1.messageSchema.validate(req.body);
+        if (error) {
+            return res.status(400).json({ error: error.message });
+        }
+        const { name, email, message } = value;
         const messages = yield message_1.default.create({
             name,
             email,

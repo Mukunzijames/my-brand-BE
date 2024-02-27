@@ -8,7 +8,7 @@ import swaggerDocuments from "./swagger.json"
 dotenv.config();
 
 const app = express();
-const port: number = parseInt(process.env.PORT!, 10);
+const port: number = parseInt(process.env.PORT!, );
 
 connectToDatabase()
 

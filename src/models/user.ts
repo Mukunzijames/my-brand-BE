@@ -1,16 +1,23 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import bcrypt from 'bcrypt';
+import { string } from 'joi';
 
 export interface IUser extends Document {
   username: string;
   password: string;
   email: string;
+  role:string
 }
 
 const userSchema = new Schema({
   username: { type: String, required: true },
   password: { type: String, required: true },
   email: { type: String, required: true },
+  role: {
+    type: String,
+    enum: ['admin', 'user'], default:"user",
+    required: true
+}
 });
 
 userSchema.pre('save', async function (next) {

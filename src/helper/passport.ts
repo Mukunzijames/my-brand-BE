@@ -15,8 +15,14 @@ passport.use(
     },
     async (req: Request,email:string, password:string, done: (error: any, user?: IUser | false) => void) => {
       try {
-        const username = req.body?.username
-        const user = await UserModel.create({ email, password, username });
+          //  const deleteUser = await UserModel.deleteMany({})
+          const users = await UserModel.find()
+             if (users.length<1){
+          const username = req.body?.username
+          const user = await UserModel.create({ email, password, username ,role:"admin"});
+           }
+          const username = req.body?.username
+         const user = await UserModel.create({ email, password, username });
         return done(null, user);
       } catch (error) {
         done(error);
@@ -35,7 +41,7 @@ passport.use(
     },
     async (email: string, password: string, done : (error :any , user?: IUser | false,options?: { message?: string; error?: any })=> void) => {
       try {
-        const user = await UserModel.findOne({ email });
+         const user = await UserModel.findOne({ email });
         if (!user) {
           return done(null, false, { message: 'User not found' });
         }
