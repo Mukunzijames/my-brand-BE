@@ -6,7 +6,7 @@ import { isAuthenticated } from "../middleware/authorization";
 
 const PostRouter = Router()
 
-PostRouter.post('/:id/comments',commentPost)
-PostRouter.get('/:id/comments',commentShow)
+PostRouter.post('/:id/comments',isAuthenticated,commentPost)
+PostRouter.get('/:id/comments',isAuthenticated,commentShow)
 
 export default PostRouter
