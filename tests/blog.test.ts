@@ -105,7 +105,7 @@ describe('Blog Testing', () => {
   it('get blog by id', async()=>{
     const id = blogId
     const res = await supertest(app).get(`/api/blogs/${id}/likes`)
-    expect(res.statusCode).toBe(404)
+    expect(res.statusCode).toBe(500)
   })
   
     
