@@ -5,6 +5,7 @@ import app from '../src/app';
 import path from 'path';
 import dotenv from 'dotenv';
 import { Console } from 'console';
+
 dotenv.config();
 const DB_url = process.env.MONGODB_TEST_URI || '';
 
