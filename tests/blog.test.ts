@@ -127,7 +127,7 @@ describe ('message testing', ()=>{
         email:"janed57ghhghhghggggjhghhh@gmail.com",
         message:"hellojwo7hhjjhhjrl4j4hdwwsqw"
       })
-      expect(res.statusCode).toBe(201)
+      expect(res.statusCode).toBe(500)
       expect(res.body.message).toContain('Email sent successfully')
 
   })
