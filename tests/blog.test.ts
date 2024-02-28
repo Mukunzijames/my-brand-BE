@@ -63,9 +63,7 @@ describe('Auth Testing', () => {
            email:"james@gmail.com",
            password:"james12345"
          });
-        //  token = "Bearer "+resLogin.body.token;
-        //  console.log(token)
-        // expect(resLogin.body.message).toContain('Logged in Successfully');
+     
    }); 
    it('should return 500 user not found', async () => {
         const resLogin = await supertest(app).post('/api/users/login').send({
