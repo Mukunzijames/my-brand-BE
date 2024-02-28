@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "start": "nodemon dist/app.js",
+    "test": "jest --detectOpenHandles",
+    "start": "nodemon dist/server.js",
     "build": "tsc"
+    
   },
   "repository": {
     "type": "git",

@@ -158,6 +158,11 @@
         "delete": {
           "tags": ["blogs"],
           "description": "Delete the blogs by id",
+          "security": [
+            {
+              "token": []
+            }
+        ],
           "parameters": [
             {
               "name": "id",
@@ -197,6 +202,11 @@
             "patch": {
                 "tags": ["blogs"],
                 "description": "Update a blog",
+                "security": [
+                  {
+                    "token": []
+                  }
+              ],
                 
                 "parameters": [{
                     "name": "id",
@@ -295,6 +305,11 @@
         "get": {
           "tags": ["messages"],
           "summary": "all message",
+          "security": [
+            {
+              "token": []
+            }
+        ],
           "responses": {
             "200": {
               "description": "OK",
@@ -325,6 +340,46 @@
         },
         "/api/messages/{id}": {
           "get": {
+            "tags": ["messages"],
+            "description": "Get message by id",
+            "parameters": [
+              {
+                "name": "id",
+                "in": "path",
+                "description": "id of the message",
+                "schema": {
+                  "type": "string",
+                  "example": "63caaf3527b29e1d399896da"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "OK",
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string"
+                        },
+                        "data": {
+                          "type": "array",
+                          "items": {}
+                        }
+                      }
+                    },
+                    "example": {
+                      "status": "success",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "delete": {
             "tags": ["messages"],
             "description": "Get message by id",
             "parameters": [
@@ -479,6 +534,11 @@
         "post": {
           "tags": ["comments"],
           "description": "add comment blog by id",
+          "security": [
+            {
+              "token": []
+            }
+        ],
           "parameters": [
             {
               "name": "id",
@@ -519,6 +579,11 @@
           "get": {
             "tags": ["comments"],
             "description": "Get all comments by id",
+            "security": [
+              {
+                "token": []
+              }
+          ],
             "parameters": [
               {
                 "name": "id",
