@@ -11,7 +11,7 @@
         "description": "development server"
       },
       {
-        "url": "http://localhost:5000",
+        "url": "https://my-brand-be-ndahiro.onrender.com/swagger/",
         "description": "production server"
       }
     ],
@@ -114,6 +114,53 @@
           }
         }
       },
+      "/api/blogs/{id}/likes": {
+        "post": {
+          "tags": ["like"],
+          "description": "like blog by id",
+          "security": [
+            {
+              "token": []
+            }
+        ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "id of the blog",
+              "schema": {
+                "type": "string",
+                "example": "63caaf3527b29e1d399896da"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string"
+                      },
+                      "data": {
+                        "type": "array",
+                        "items": {}
+                      }
+                    }
+                  },
+                  "example": {
+                    "status": "success",
+                    "data": []
+                  }
+                }
+              }
+            }
+          }
+        }
+        },
       "/api/blogs/{id}": {
         "get": {
           "tags": ["blogs"],
@@ -155,6 +202,51 @@
             }
           }
         },
+          "post": {
+            "tags": ["like"],
+            "description": "unlike blog by id",
+            "security": [
+              {
+                "token": []
+              }
+          ],
+            "parameters": [
+              {
+                "name": "id",
+                "in": "path",
+                "description": "id of the blog",
+                "schema": {
+                  "type": "string",
+                  "example": "63caaf3527b29e1d399896da"
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "OK",
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "string"
+                        },
+                        "data": {
+                          "type": "array",
+                          "items": {}
+                        }
+                      }
+                    },
+                    "example": {
+                      "status": "success",
+                      "data": []
+                    }
+                  }
+                }
+              }
+            }
+          },
         "delete": {
           "tags": ["blogs"],
           "description": "Delete the blogs by id",
