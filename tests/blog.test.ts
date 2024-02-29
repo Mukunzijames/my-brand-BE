@@ -264,7 +264,6 @@ it('should update message',async()=>{
   expect(response.statusCode).toBe(404)
 
 })
-// it('should get ')
 });
 describe('comment testing',()=>{
   
