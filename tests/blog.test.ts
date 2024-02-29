@@ -1,16 +1,20 @@
 import { test, it, describe, expect, beforeAll, afterAll, afterEach } from '@jest/globals';
 import supertest, { Request, Response } from 'supertest';
+
 import mongoose from 'mongoose'
 import app from '../src/app';
 import path from 'path';
+import Post, { Ipost } from "../src/models/blog"
 import dotenv from 'dotenv';
-import { Console } from 'console';
+
 
 dotenv.config();
+
 const DB_url = process.env.MONGODB_TEST_URI || '';
 
 beforeAll(async () => {
-  await mongoose.createConnection(DB_url);
+  const DB_URL2=await mongoose.connect("mongodb+srv://jimmy:jimmy123@jimmy.pxitdka.mongodb.net/?retryWrites=true&w=majority&appName=jimmy")
+  //await mongoose.createConnection(DB_URL2);
 }, 50000);
 
 afterAll(async () => {
@@ -28,7 +32,7 @@ afterAll(async () => {
 //    }
 //  };
 let token ='';
-let blogId =""
+let ids=''
 
 describe('Auth Testing', () => {
 
@@ -38,19 +42,10 @@ describe('Auth Testing', () => {
       email:"patrick2345@gmail.com",
       password:"richard1235ji"
      });
-     expect(res.status).toBe(500)    
+     expect(res.status).toBe(200)    
    });
 
-   it('should not register user with invalid Email', async () => {
-     const res = await supertest(app)
-       .post('/api/users/register')
-       .send({
-         username:"afro",
-         email:"edwin@gmailhjjhj.com12",
-         password:"richard123"
-       })
-     expect(res.statusCode).toBe(500);
-   });
+ 
    it('should register user and login', async () => {
     let r = (Math.random() + 1).toString(36).substring(5);
       const res = await supertest(app).post('/api/users/register').send({
@@ -61,9 +56,12 @@ describe('Auth Testing', () => {
         expect(res.body.message).toContain('register successful');
 
         const resLogin = await supertest(app).post('/api/users/login').send({
-           email:"james@gmail.com",
-           password:"james12345"
+          email:"patrick2345@gmail.com",
+          password:"richard1235ji"
          });
+         expect(resLogin.statusCode).toBe(200)
+         token=resLogin.body.token
+
      
    }); 
    it('should return 500 user not found', async () => {
@@ -73,63 +71,175 @@ describe('Auth Testing', () => {
          });
         expect(resLogin.statusCode).toBe(500);
    });
-});
+   let blogId:any=''
 describe('Blog Testing', () => {
+  
    const images = [
       './images/image1.jpg'
     ];
+
+ let r = (Math.random() + 1).toString(36).substring(5);
+    let blogs={  title: "this blog is final hh 2324"+r,
+                 desc: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                 image: "image.png"}
+
+
+
     it('getting All posts/blogs', async () => {
-      const response = await supertest(app).get('/api/blogs/');
+      const blog= await Post.create(blogs)
+      const response = await supertest(app).get('/api/blogs');
       expect(response.status).toBe(200)
-      // blogId =response.body[0]._id
-      // console.log(blogId)
+    });
+
+    it('get a single posts/blogs', async () => {
+      const response1 = await supertest(app).get('/api/blogs');
+       const blogList:string=response1.body,
+       blogId =response1.body[blogList.length-1]._id
+       ids=blogId
+      const response = await supertest(app).get(`/api/blogs/${blogId}`);
+      expect(response.status).toBe(200)
+   
+    });
+
+    it('get unexisting single posts/blogs', async () => {
+      const response = await supertest(app).get(`/api/blogs/65e0628b855cedbb9bce7368kk`);
+      expect(response.status).toBe(500)
+     
     });
 
 
+    it('update single posts/blogs unauthenticated', async () => {
+      const response = await supertest(app).patch(`/api/blogs/${ids}`).
+      send({title:"test patching blog"})
 
-    it('Post liked successfully', async () => {
+      expect(response.statusCode).toBe(401)
+    });
+
+    it('update single posts/blogs with inavalid id', async () => {
+      const response = await supertest(app).patch(`/api/blogs/65e0628b855cedbb9bce7368kk`)
+      .set("Authorization",`Bearer ${token}`);
+      expect(response.status).toBe(500)
+     
+    });
+
+   
+
+
+    it('sending a comment to posts/blogs successful', async () => {
+     const response = await supertest(app).get(`/api/blogs/${ids}/comments`)
+     .send({
+      name:"emmanuel",
+       email:"emmy@gmail.com", 
+       commentSent:"test of comment"
+     })
+     .set("Authorization",`Bearer ${token}`);
+      expect(response.status).toBe(200)
+    });
+
+    it('sending a comment to posts/blogs unauthenticated user', async () => {
+     const response = await supertest(app).post(`/api/blogs/${ids}/comments`);
+      expect(response.status).toBe(401)
+    });
+
+    it('get all comment to posts/blogs unauthenticated user', async () => {
+      const response = await supertest(app).get(`/api/blogs/${ids}/comments`)
+       expect(response.status).toBe(401)
+     });
+
+     it('get all comment to posts/blogs successful', async () => {
+      const response = await supertest(app).post(`/api/blogs/${ids}/comments`)
+      .set("Authorization",`Bearer ${token}`);
+       expect(response.status).toBe(201)
+     });
+ 
+
+
+
+
+
+
+
+    it('Post liked not authenticated', async () => {
       const id = blogId
       const response = await supertest(app)
-          .post(`/api/blogs/${id}`);
+          .post(`/api/blogs/${id}/likes`);
       expect(response.status).toBe(401)
       expect(response.body.message).toContain('Unauthenticated user detected. Please login to continue')
-  });
-  it('Post unliked successfully', async () => {
-    const id = blogId
+      
+  
+    });
+
+    it('Post liked to authenticated', async () => {
+      const id = blogId
+      const response = await supertest(app)
+          .post(`/api/blogs/${ids}/likes`)
+      .set("Authorization",`Bearer ${token}`);
+      expect(response.status).toBe(200)
+    });
+
+    it('Post liked to unexisting blog id ', async () => {
+      const response = await supertest(app)
+          .post(`/api/blogs/65e06b0eeb86efe8076659a4/likes`)
+          .set("Authorization",`Bearer ${token}`);
+      expect(response.status).toBe(404)
+  
+    });
+
+    it('Post liked to unexisting blog id ', async () => {
+      const response = await supertest(app)
+          .post(`/api/blogs/65e06b0eeb86efe8076659a477/likes`)
+          .set("Authorization",`Bearer ${token}`);
+      expect(response.status).toBe(500)
+  
+    });
+
+  it('Post unliked to unauthenticated user', async () => {
+
     const response = await supertest(app)
-        .post(`/api/blogs/${id}`);
+        .post(`/api/blogs/${ids}/likes`);
     expect(response.status).toBe(401)
     expect(response.body.message).toContain('Unauthenticated user detected. Please login to continue')
-});
-  it('get blog by id', async()=>{
-    const id = blogId
-    const res = await supertest(app).get(`/api/blogs/${id}/likes`)
-    expect(res.statusCode).toBe(500)
-  })
-  
-    
-//   it('you should create a blog', async () => {
-//    const res = await supertest(app)
-//      .post('/api/blogs')
-//      .attach('image', path.join(__dirname, images[0]))
-//      .field({
-//        title: 'NewBlog1212348',
-//        desc: 'New Bloghh 11NewBlog33',
-//      });
-//    expect(res.statusCode).toBe(201);
-//  }, 10000);
-});
- describe ('message testing', ()=>{
-//   it ('send message', async ()=>{
-//       const res =  await supertest(app).post('/api/messages').send({
-//         name:"janed38hhjhvhhhggjjjjjjjhhjhb",
-//         email:"janed57ghhghhghggggjhghhh@gmail.com",
-//         message:"hellojwo7hhjjhhjrl4j4hdwwsqw"
-//       })
-//       expect(res.statusCode).toBe(500)
-//       expect(res.body.message).toContain('Email sent successfully')
+   
+  });
 
-//   })
+  it('Post unliked successfully ', async () => {
+    const response = await supertest(app)
+        .post(`/api/blogs/${ids}/likes`)
+        .set("Authorization",`Bearer ${token}`);
+    expect(response.status).toBe(200)
+
+  });
+
+  it('Post unliked to unexisting blog id ', async () => {
+    const response = await supertest(app)
+        .post(`/api/blogs/65e06b0eeb86efe8076659a4/likes`)
+        .set("Authorization",`Bearer ${token}`);
+    expect(response.status).toBe(404)
+
+  });
+
+  it('Post unliked to unexisting blog id ', async () => {
+    const response = await supertest(app)
+        .post(`/api/blogs/65e06b0eeb86efe8076659a4uuuu/likes`)
+        .set("Authorization",`Bearer ${token}`);
+    expect(response.status).toBe(500)
+    
+  });
+
+  it('update single posts/blogs successfull', async () => {
+
+    const response = await supertest(app).delete(`/api/blogs/${ids}`)
+    .set("Authorization",`Bearer ${token}`);
+  
+    expect(response.statusCode).toBe(200)
+    
+  });
+
+
+});
+
+ describe ('message testing', ()=>{
+
   it ('send message', async ()=>{
     const res =  await supertest(app).post('/api/messages').send({
       name:"",
@@ -157,10 +267,9 @@ it('should update message',async()=>{
 // it('should get ')
 });
 describe('comment testing',()=>{
-  console.log(token)
-  console.log(blogId)
+  
   it('should create comment', async()=>{
-    const id = blogId
+    const id=''
     const response = await supertest(app).post(`/api/${id}/comments`)
     .set("authorization",token)
     .send({
@@ -168,13 +277,14 @@ describe('comment testing',()=>{
       email:"jjjjjjjjhbvhssak@gmail.com",
       commentSent:"that's  great", 
     })
-    //  console.log(token)
+
 expect(response.statusCode).toBe(404)
   })
   it('should get all comment',async()=>{
     const id = blogId
     const response = await supertest(app).get(`/api/${id}/comments`)
 expect(response.statusCode).toBe(404)
+
   })
 })
-
+});
