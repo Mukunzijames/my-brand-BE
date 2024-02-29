@@ -13,7 +13,7 @@ dotenv.config();
 const DB_url = process.env.MONGODB_TEST_URI || '';
 
 beforeAll(async () => {
-  const DB_URL2=await mongoose.connect("mongodb+srv://jimmy:jimmy123@jimmy.pxitdka.mongodb.net/?retryWrites=true&w=majority&appName=jimmy")
+ await mongoose.connect("mongodb+srv://jimmy:jimmy123@jimmy.pxitdka.mongodb.net/?retryWrites=true&w=majority&appName=jimmy")
   //await mongoose.createConnection(DB_URL2);
 }, 50000);
 
