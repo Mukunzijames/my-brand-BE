@@ -631,6 +631,26 @@
               "token": []
             }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "commentSent": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
           "parameters": [
             {
               "name": "id",
