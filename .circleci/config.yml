@@ -22,4 +22,4 @@ jobs:
             echo "##[endgroup]"
       - run: npm ci
       - run: npm test
-      -coveralls/upload
+      - coveralls/upload
