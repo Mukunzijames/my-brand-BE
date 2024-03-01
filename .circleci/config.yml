@@ -1,14 +1,19 @@
 version: 2.1
-#orbs
+
+# Define orbs
 orbs:
   node: circleci/node@4.1.0
   coveralls: coveralls/coveralls@2.2.1
+
+# Define workflows
 workflows:
   build:
     jobs:
-      - build
+      - build_and_upload_coverage
+
+# Define jobs
 jobs:
-  build:
+  build_and_upload_coverage:
     docker:
       - image: cimg/node:16.13.2
     steps:
@@ -22,4 +27,7 @@ jobs:
             echo "##[endgroup]"
       - run: npm ci
       - run: npm test
-      -coveralls/upload
+      - run:
+          name: Upload coverage to Coveralls
+          command: |
+            ./coveralls report || true  # Execute the Coveralls reporting command and ignore errors

@@ -11,7 +11,7 @@ const blogRouter = (0, express_1.Router)();
 blogRouter.post('/', authorization_1.isAdmin, multer_1.default.single('image'), blog_1.createPost);
 blogRouter.get('/:id', blog_1.getPost);
 blogRouter.get('/', blog_1.getAllPost);
-blogRouter.patch('/:id', authorization_1.isAdmin, blog_1.updatePost);
+blogRouter.patch('/:id', authorization_1.isAdmin, multer_1.default.single('image'), blog_1.updatePost);
 blogRouter.delete('/:id', authorization_1.isAdmin, blog_1.deletePost);
 blogRouter.post("/:id/likes", authorization_1.isAuthenticated, blog_1.Likes);
 blogRouter.post("/:id", authorization_1.isAuthenticated, blog_1.unLikes);
