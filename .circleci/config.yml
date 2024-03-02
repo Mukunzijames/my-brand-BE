@@ -28,10 +28,6 @@ jobs:
       - run: npm ci
       - run: npm test
       - run:
-          name: Install coveralls tool
-          command: |
-            curl -sL https://github.com/coverallsapp/coverage-reporter/releases/latest/download/coveralls-linux.tar.gz | tar xvz
-      - run:
           name: Upload coverage to Coveralls
           command: |
             ./coveralls report || true  # Execute the Coveralls reporting command and ignore errors
