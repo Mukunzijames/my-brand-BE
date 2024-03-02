@@ -1,18 +1,16 @@
 version: 2.1
-
-# Define orbs
+#orbs
 orbs:
   node: circleci/node@4.1.0
   coveralls: coveralls/coveralls@2.2.1
 
-# Define workflows
 workflows:
   build:
     jobs:
-      - build_and_upload_coverage
+      - build
 
 jobs:
-  build_and_upload_coverage:
+  build:
     docker:
       - image: cimg/node:16.13.2
     steps:
