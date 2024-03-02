@@ -27,7 +27,4 @@ jobs:
             echo "##[endgroup]"
       - run: npm ci
       - run: npm test
-      - run:
-          name: Upload coverage to Coveralls
-          command: |
-            ./coveralls report || true  # Execute the Coveralls reporting command and ignore errors
+      - coveralls/upload
