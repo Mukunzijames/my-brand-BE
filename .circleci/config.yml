@@ -27,7 +27,8 @@ jobs:
       - run:
           name: Upload coverage to Coveralls
           command: |
-          /path/to/coveralls report || true
+            ./coveralls report || true  # Execute the Coveralls reporting command and ignore errors
+
 
 
 
