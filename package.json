@@ -8,6 +8,20 @@
     "start": "nodemon dist/server.js",
     "build": "tsc"
   },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      ".spec.js$",
+      ".test.js$"
+    ],
+    "coverageDirectory": "./coverage",
+    "coverageReporters": [
+      "text",
+      "text-summary",
+      "lcov"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Mukunzijames/my-brand-BE.git"
