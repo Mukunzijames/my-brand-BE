@@ -27,7 +27,7 @@ jobs:
       - run:
           name: Upload coverage to Coveralls
           command: |
-            -eo pipefail report || true  # Execute the Coveralls reporting command and ignore errors
+            ./coveralls report || true  # Execute the Coveralls reporting command and ignore errors
 
 
 
