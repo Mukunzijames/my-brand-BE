@@ -24,8 +24,6 @@ jobs:
             echo "##[endgroup]"
       - run: npm ci
       - run: npm test
-      - run: apt-get install -y sudo
-      - run: ls -al /bin/sh && sudo rm /bin/sh && sudo ln -s /bin/bash /bin/sh && ls -al /bin/sh
       - run:
           name: Upload coverage to Coveralls
           command: |
