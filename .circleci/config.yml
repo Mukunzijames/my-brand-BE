@@ -1,9 +1,7 @@
-version: 2.1
-
 # Define orbs
 orbs:
   node: circleci/node@4.1.0
-  coveralls: coveralls/coveralls@2.2.1
+  coveralls: coveralls/coveralls@0.6.6
 
 # Define workflows
 workflows:
@@ -27,10 +25,6 @@ jobs:
             echo "##[endgroup]"
       - run: npm ci
       - run: npm test
-      - run:
-          name: Install coveralls tool
-          command: |
-            curl -sL https://github.com/coverallsapp/coverage-reporter/releases/latest/download/coveralls-linux.tar.gz | tar xvz
       - run:
           name: Upload coverage to Coveralls
           command: |
