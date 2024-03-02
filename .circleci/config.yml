@@ -7,7 +7,7 @@ orbs:
 workflows:
   build:
     jobs:
-      - build_and_upload_coverage
+      - build
 
 jobs:
   build:
