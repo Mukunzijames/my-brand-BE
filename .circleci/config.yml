@@ -25,7 +25,9 @@ jobs:
       - run: npm ci
       - run: npm test
       - coveralls/upload
-       verbose: true
+      notify:
+  webhooks:
+    - url: https://coveralls.io/webhook?repo_token=brZSlbNvHXhMKc2gUaHrvOabhLixkinED
 
 
 
