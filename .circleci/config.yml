@@ -24,10 +24,10 @@ jobs:
             echo "##[endgroup]"
       - run: npm ci
       - run: npm test
-      - coveralls/upload
-notify:
-  webhooks:
-      - url: https://coveralls.io/webhook?repo_token=brZSlbNvHXhMKc2gUaHrvOabhLixkinED
+      - run:
+          name: Upload coverage to Coveralls
+          command: |
+            ./coveralls report || true  # Execute the Coveralls reporting command and ignore errors
 
 
 
