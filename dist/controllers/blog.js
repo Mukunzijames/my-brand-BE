@@ -58,29 +58,19 @@ exports.getPost = getPost;
 //update post
 const updatePost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // Find the post by ID
         const post = yield blog_1.default.findById(req.params.id);
-        if (!post) {
-            return res.status(404).json({ status: "error", message: "Post not found" });
-        }
-        // Delete the image associated with the post from cloud storage
-        yield cloudinary_1.default.uploader.destroy(post.image);
-        // Update the post with the new data
-        const updated = yield blog_1.default.findByIdAndUpdate(req.params.id, {
-            title: req.body.title,
-            desc: req.body.desc,
-            image: req.body.image,
-        }, { new: true });
-        // Send the updated post data as response
+        const updated = yield blog_1.default.findByIdAndUpdate(req.params.id, { $set: {
+                title: req.body.title,
+                desc: req.body.desc,
+                image: req.body.image,
+            } }, { new: true });
         res.status(200).json({
             status: "success",
             data: updated
         });
     }
     catch (error) {
-        // Handle errors
-        console.error("Error updating post:", error);
-        res.status(500).json({ status: "error", message: "Internal server error" });
+        res.status(500).json({ status: "error", error: 'hello' });
     }
 });
 exports.updatePost = updatePost;

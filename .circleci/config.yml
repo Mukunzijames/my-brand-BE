@@ -1,19 +1,15 @@
 version: 2.1
-
-# Define orbs
 orbs:
   node: circleci/node@4.1.0
   coveralls: coveralls/coveralls@2.2.1
 
-# Define workflows
 workflows:
   build:
     jobs:
-      - build_and_upload_coverage
+      - build
 
-# Define jobs
 jobs:
-  build_and_upload_coverage:
+  build:
     docker:
       - image: cimg/node:16.13.2
     steps:
@@ -21,7 +17,7 @@ jobs:
       - run:
           name: Set up Node.js
           command: |
-            echo "##[group] Installing Node.js"
+           echo "##[group] Installing Node.js"
             curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
             sudo apt-get install -y nodejs
             echo "##[endgroup]"
@@ -31,3 +27,12 @@ jobs:
           name: Upload coverage to Coveralls
           command: |
             ./coveralls report || true  # Execute the Coveralls reporting command and ignore errors
+
+
+
+
+
+
+
+
+
