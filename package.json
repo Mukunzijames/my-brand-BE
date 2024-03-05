@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage",
+    "test": "jest --coverage --updateSnapshot --detectOpenHandles",
     "start": "nodemon dist/server.js",
     "test:watch": "jest --watch --coverage --detectOpenHandles --verbose",
     "test:badges": "npm run test:coverage  && jest-coverage-badges",
