@@ -397,11 +397,6 @@
         "get": {
           "tags": ["messages"],
           "summary": "all message",
-          "security": [
-            {
-              "token": []
-            }
-        ],
           "responses": {
             "200": {
               "description": "OK",
