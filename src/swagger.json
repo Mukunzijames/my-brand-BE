@@ -429,6 +429,11 @@
           "get": {
             "tags": ["messages"],
             "description": "Get message by id",
+            "security": [
+              {
+                "token": []
+              }
+          ],
             "parameters": [
               {
                 "name": "id",
