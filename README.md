@@ -1,5 +1,7 @@
 [![Node.js CI](https://github.com/Mukunzijames/my-brand-BE/actions/workflows/testing.yml/badge.svg)](https://github.com/Mukunzijames/my-brand-BE/actions/workflows/testing.yml)
 [![Coverage Status](https://coveralls.io/repos/github/Mukunzijames/my-brand-BE/badge.svg?branch=main)](https://coveralls.io/github/Mukunzijames/my-brand-BE?branch=main)
+
+
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white) ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB) ![CircleCI](https://img.shields.io/badge/circle%20ci-%23161616.svg?style=for-the-badge&logo=circleci&logoColor=white)
  ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white) 
 
@@ -27,7 +29,7 @@
 
 ### How to Test My Project
 
-Since the project backend is implemented with various API endpoints, to test the project, I use Postman as an application for testing APIs.
+Since the project backend is implemented with various API endpoints, to test the project, I use Postman as an application for testing API.
 
 ### All API Endpoints for My Project
 
