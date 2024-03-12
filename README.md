@@ -2,5 +2,4 @@
 [![CircleCI](https://dl.circleci.com/status-badge/img/circleci/zDUhksBQ6RreDfcxSzxkm/9msbUqyxdtQXnJE48f9Huy/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/circleci/zDUhksBQ6RreDfcxSzxkm/9msbUqyxdtQXnJE48f9Huy/tree/main)
 
 
-[![Coverage Status](https://coveralls.io/repos/github/Mukunzijames/my-brand-BE/badge.svg?branch=action)](https://coveralls.io/github/Mukunzijames/my-brand-BE?branch=main)
-
+[![Node.js CI](https://github.com/Mukunzijames/my-brand-BE/actions/workflows/testing.yml/badge.svg)](https://github.com/Mukunzijames/my-brand-BE/actions/workflows/testing.yml)
